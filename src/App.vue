@@ -1,12 +1,21 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+<div id="app" class="container">
+    <Header></Header>
+    <GBP></GBP>
+    <router-view />
+</div>
 </template>
+
+<script>
+import Header from "./components/Header";
+import GBP from "./views/gestion_budget_previsionel";
+export default {
+  components: {
+    Header,
+    GBP
+  },
+};
+</script>
 
 <style lang="scss">
 #app {
