@@ -1,6 +1,7 @@
 <template>
-<div class="row">
-    <div class="col-12">
+<div class="row mt-5">
+    <div class="col-12 text-left">
+        <h1>Gestion du budget previsionel</h1>
         <form action="" class="form mb-5 mt-5">
             <div class="form-group">
                 <label for="eb" class="form-group-label mr-2">Exercice Budgetaire: </label>
