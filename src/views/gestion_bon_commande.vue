@@ -5,11 +5,18 @@
       <div class=" menu">
         <form action="" class="menu_form">
           <div class="form-group">
-            <label for="eb" class="form-group-label mr-2">Exercice: </label>
-            <select class="form--group-select" id="eb">
-              <option>2020</option>
-              <option>2019</option>
-            </select>
+            <label for="years" class="form-group-label mr-2">Exercice: </label>
+            <md-select
+              @change="changeYear($event)"
+              v-model="years"
+              name="years"
+              id="years"
+            >
+              <md-option value="fight-club">Fight Club</md-option>
+              <md-option value="godfather">Godfather</md-option>
+              <md-option value="godfather-ii">Godfather II</md-option>
+              <md-option value="godfather-iii">Godfather III</md-option>
+            </md-select>
           </div>
           <div class="form-group">
             <label for="tb" class="form-group-label mr-2">Etat: </label>
@@ -48,15 +55,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">2222</th>
-            <td>ABCD</td>
-            <td>1234</td>
-            <td>1234</td>
-            <td>1234</td>
-            <td>1234</td>
-            <td>1234</td>
-            <td>1234</td>
+          <tr v-for="(bon, index) in data" :key="index">
+            <th scope="row">{{ bon.Num_cmd }}</th>
+            <td>{{ bon.Date_cmd }}</td>
+            <td>{{ bon.Code_service }}</td>
+            <td>{{ bon.Code_fournisseur }}</td>
+            <td>{{ bon.Objet_cmd }}</td>
+            <td>{{ bon.Num_compte }}</td>
+            <td>{{ bon.Montant }}</td>
+            <td>{{ bon.Etat }}</td>
+            <!-- <td v-show="bon.enabled">{{bon.enabled}}</td>
+            <td v-show="!bon.enabled">{{bon.enabled}}</td> -->
             <td>Consulter</td>
           </tr>
         </tbody>
@@ -64,6 +73,26 @@
     </div>
   </div>
 </template>
+
+<script>
+import bonService from "../services/bon.services";
+export default {
+  name: "GBC",
+  data() {
+    return {
+      data: [],
+      year: [2020, 2019, 2018, 2017, 2016, 2015, 2014],
+    };
+  },
+  methods: {
+    changeYear(event) {
+      bonService.getBons(event.target.value).then((data) => {
+        this.data = data.data;
+      });
+    },
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 .menu {
