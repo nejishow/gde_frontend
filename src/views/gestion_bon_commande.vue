@@ -6,21 +6,22 @@
         <form action="" class="menu_form">
           <div class="form-group">
             <label for="years" class="form-group-label mr-2">Exercice: </label>
-            <md-select
-              @change="changeYear($event)"
-              v-model="years"
-              name="years"
-              id="years"
-            >
-              <md-option value="fight-club">Fight Club</md-option>
-              <md-option value="godfather">Godfather</md-option>
-              <md-option value="godfather-ii">Godfather II</md-option>
-              <md-option value="godfather-iii">Godfather III</md-option>
-            </md-select>
+            <select @change="changeYear($event)" name="years" id="years">
+              <option value=""></option>
+              <option value="2020">2020</option>
+              <option value="2019">2019</option>
+              <option value="2018">2018</option>
+              <option value="2017">2017</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="tb" class="form-group-label mr-2">Etat: </label>
-            <select class="form-group-select" id="tb">
+            <select
+              @change="changeValidity($event)"
+              class="form-group-select"
+              id="tb"
+            >
+              <option></option>
               <option>Valide</option>
               <option>Invalide</option>
             </select>
@@ -66,7 +67,7 @@
             <td>{{ bon.Etat }}</td>
             <!-- <td v-show="bon.enabled">{{bon.enabled}}</td>
             <td v-show="!bon.enabled">{{bon.enabled}}</td> -->
-            <td>Consulter</td>
+            <td><router-link :to="'/bon/'+ bon._id"><button>Consulter</button></router-link></td>
           </tr>
         </tbody>
       </table>
@@ -81,7 +82,6 @@ export default {
   data() {
     return {
       data: [],
-      year: [2020, 2019, 2018, 2017, 2016, 2015, 2014],
     };
   },
   methods: {

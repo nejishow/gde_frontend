@@ -4,6 +4,7 @@ import Dashboard from '../views/Dashboard';
 import GBC from '../views/gestion_bon_commande';
 import GBP from '../views/gestion_budget_previsionel';
 import GMP from '../views/gestion_mandats_paiements';
+import Bon from '../views/bon_commande';
 Vue.use(VueRouter)
 
   const routes = [
@@ -16,6 +17,11 @@ Vue.use(VueRouter)
     path: '/GBC',
     name: 'GBC',
     component: GBC
+  },
+  {
+    path: '/bon/:id',
+    name: 'Bon',
+    component: Bon
   },
   {
     path: '/GBP',
