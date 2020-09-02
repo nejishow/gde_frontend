@@ -7,11 +7,12 @@
           <div class="form-group">
             <label for="years" class="form-group-label mr-2">Exercice: </label>
             <select @change="changeYear($event)" name="years" id="years">
-              <option value=""></option>
-              <option value="2020">2020</option>
-              <option value="2019">2019</option>
-              <option value="2018">2018</option>
-              <option value="2017">2017</option>
+              <option
+                :value="item"
+                v-for="(item, index) in years"
+                :key="index"
+                >{{ item }}</option
+              >
             </select>
           </div>
           <div class="form-group">
@@ -67,7 +68,11 @@
             <td>{{ bon.Etat }}</td>
             <!-- <td v-show="bon.enabled">{{bon.enabled}}</td>
             <td v-show="!bon.enabled">{{bon.enabled}}</td> -->
-            <td><router-link :to="'/bon/'+ bon._id"><button>Consulter</button></router-link></td>
+            <td>
+              <router-link :to="'/bon/' + bon._id"
+                ><button>Consulter</button></router-link
+              >
+            </td>
           </tr>
         </tbody>
       </table>
@@ -90,6 +95,27 @@ export default {
         this.data = data.data;
       });
     },
+  },
+  computed: {
+    bons() {
+      console.log(this.$store.state.bon.bons.length);
+      return this.$store.state.bon.bons.length;
+    },
+    years() {
+          let array = [];
+    for (let index = 0; index < 100; index++) {
+      const year = new Date().getFullYear();
+      array.push(year - index);
+      if (array[index] == 2013) {
+        break;
+      }
+    }    return array;
+    }
+  },
+  mounted() {
+          bonService.getBons(new Date().getFullYear()).then((data) => {
+        this.data = data.data;
+      });
   },
 };
 </script>

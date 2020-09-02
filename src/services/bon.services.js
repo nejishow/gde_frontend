@@ -14,6 +14,9 @@ export default {
   getBons(date) {
         return bon.get("/bons/"+ date);
   },
+  getAllBons() {
+    return bon.get("/bons");
+},
   getBon(id) {
     return bon.get("/bon/" +id);
   },

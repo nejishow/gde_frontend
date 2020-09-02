@@ -13,16 +13,22 @@
           <div class="cmd row d-flex justify-content-between">
             <div class="num_cmd">
               <label for="num_cmd">Numero commande: </label>
-              <input readonly type="text" id="num_cmd" />
+              <input readonly type="text" :value="BON.Num_cmd" id="num_cmd" />
             </div>
             <div class="date_cmd">
               <label for="date_cmd">Date commande: </label>
-              <input readonly type="text" id="date_cmd" value="" />
+              <input readonly type="text" :value="BON.Date_cmd" id="date_cmd" />
             </div>
           </div>
           <div class="objet row d-flex justify-content-between">
             <label for="objet" class="objet_label col-2">Objet:</label>
-            <input readonly type="text" id="objet" class="objet_input col-10" />
+            <input
+              readonly
+              :value="BON.Objet_cmd"
+              type="text"
+              id="objet"
+              class="objet_input col-10"
+            />
           </div>
           <div class="fournisseur row d-flex justify-content-between">
             <label for="fournisseur" class="fournisseur_label col-2"
@@ -31,13 +37,13 @@
             <input
               type="text"
               class="fournisseur_input1 col-3"
-              value="numero"
+              :value="BON.Code_fournisseur"
               readonly
             />
             <input
               type="text"
               class="fournisseur_input2 col-5"
-              value="nom"
+              :value="fournisseur.Nom_Fournisseur"
               readonly
             />
           </div>
@@ -46,14 +52,14 @@
             <input
               type="text"
               class="compte_input1 col-3"
-              value="numero"
+              :value="BON.Num_compte"
               readonly
             />
             <input
               readonly
               type="text"
               class="compte_input2 col-5"
-              value="nom"
+              :value="compte.Libellé"
             />
           </div>
           <div class="service row d-flex justify-content-between">
@@ -61,13 +67,13 @@
             <input
               type="text"
               class="service_input1 col-3"
-              value="numero"
+              :value="BON.Code_service"
               readonly
             />
             <input
               type="text"
               class="service_input2 col-5"
-              value="nom"
+              :value="service.Nom_service"
               readonly
             />
           </div>
@@ -98,10 +104,10 @@
         </div>
       </div>
       <div class="row cmd_box">
-        <table class="table">
+        <table class="table text-left">
           <thead>
             <tr>
-              <th>Article</th>
+              <th colspan="2">Article</th>
               <th>Prix unitaire</th>
               <th>Quantité</th>
               <th>Montant</th>
@@ -109,17 +115,17 @@
           </thead>
           <tbody>
             <tr>
-              <td>
-                article
+              <td colspan="2">
+                {{ BON.Objet_cmd }}
               </td>
               <td>
-                PU
+                {{ BON.Montant }}
               </td>
               <td>
-                Quantité
+                1
               </td>
               <td>
-                montant
+                {{ BON.Montant }}
               </td>
             </tr>
           </tbody>
@@ -141,33 +147,35 @@
         <div class="col-8 card bg-warning p-3">
           <div class="cmd row d-flex justify-content-between">
             <div class="num_cmd">
-              <label for="num_cmd">Numero commande: </label>
-              <input readonly type="text" id="num_cmd" />
+              <label for="num_cmd_m">Numero commande: </label>
+              <input type="text" :value="BON.Num_cmd" id="num_cmd_m" />
             </div>
             <div class="date_cmd">
-              <label for="date_cmd">Date commande: </label>
-              <input readonly type="text" id="date_cmd" value="" />
+              <label for="date_cmd_m">Date commande: </label>
+              <input type="text" :value="BON.Date_cmd" id="date_cmd_m" />
             </div>
           </div>
           <div class="objet row d-flex justify-content-between">
-            <label for="objet" class="objet_label col-2">Objet:</label>
-            <input readonly type="text" id="objet" class="objet_input col-10" />
+            <label for="objet_m" class="objet_label col-2">Objet:</label>
+            <input
+              :value="BON.Objet_cmd"
+              type="text"
+              id="objet_m"
+              class="objet_input col-10"
+            />
           </div>
           <div class="fournisseur row d-flex justify-content-between">
-            <label for="fournisseur" class="fournisseur_label col-2"
+            <label for="fournisseur_m" class="fournisseur_label col-2"
               >Fournisseur:</label
             >
-            <input
-              type="text"
-              class="fournisseur_input1 col-3"
-              value="numero"
-              readonly
-            />
+            <select v-model="BON.Code_fournisseur"  name="fournisseur" id="">
+              <option v-for="(fourn, index) in fournisseurs" :key="index" :value="fourn.Code_Fournisseur">{{fourn.Code_Fournisseur}}</option>
+            </select>
             <input
               type="text"
               class="fournisseur_input2 col-5"
-              value="nom"
               readonly
+              :value="fournisseur.Nom_Fournisseur"
             />
           </div>
           <div class="compte row d-flex justify-content-between">
@@ -175,23 +183,16 @@
             <input
               type="text"
               class="compte_input1 col-3"
-              value="numero"
-              readonly
+              :value="BON.Num_compte"
             />
-            <input
-              readonly
-              type="text"
-              class="compte_input2 col-5"
-              value="nom"
-            />
+            <input readonly type="text" class="compte_input2 col-5" value="" />
           </div>
           <div class="service row d-flex justify-content-between">
             <label for="service" class="service col-2">Service:</label>
             <input
               type="text"
               class="service_input1 col-3"
-              value="numero"
-              readonly
+              :value="BON.Code_service"
             />
             <input
               type="text"
@@ -225,52 +226,100 @@
           </div>
         </div>
       </div>
-      <div class="row cmd_box">
-        <button class="btn btn-success" @click="addCell">cellule</button>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Article</th>
-              <th>Prix unitaire</th>
-              <th>Quantité</th>
-              <th>Montant</th>
-            </tr>
-          </thead>
-          <tbody id="article">
-            <tr class="newArticle">
-              <td>
-<input type="text">              </td>
-              <td>
-                <input type="text">  
-              </td>
-              <td>
-                <input type="text">  
-              </td>
-              <td>
-                <input type="text">  
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="row cmd_box text-left">
+        <div class="col-6 d-flex flex-column">
+          <h5>ARTICLE</h5>
+          <input
+            type="text"
+            name="article"
+            v-model="BON.Objet_cmd"
+            width="300px"
+          />
+        </div>
+        <div class="col-2d-flex flex-column">
+          <h5>Prix unitaire</h5>
+          <input type="string" name="price" v-model="BON.Montant" />
+        </div>
+        <div class="col-2d-flex flex-column">
+          <h5>Quantité</h5>
+          <input type="text" name="total" readonly value="1" />
+        </div>
+        <div class="col-2d-flex flex-column">
+          <h5>Montant</h5>
+          <input type="text" name="total" readonly :value="BON.Montant" />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import bonServices from "../services/bon.services";
+import fournisseurServices from "../services/fournisseur";
+import compteServices from "../services/compte_budgetaire";
+import serviceServices from "../services/services";
 export default {
   data() {
     return {
-      isModify: true,
-      article: document.getElementById("article"),
+      isModify: false,
+      idCommande: "",
+      BON: {},
+      fournisseurs: [],
+      comptes: [],
+      services: [],
     };
   },
   methods: {
-    addCell() {
-      const newArticle = document.createElement("tr");
-      newArticle.innerHTML = "<td><input type='text'></td><td><input type='text'></td><td><input type='text'></td><td><input type='text'></td>"
-      document.getElementById("article").appendChild(newArticle);
+    addNewArticle() {},
+    removeArticle(index) {
+      this.newArticle.splice(index, 1);
+      console.log("test");
     },
+  },
+  computed: {
+    fournisseur() {
+      var fourn = {};
+      this.fournisseurs.forEach((element) => {
+        if (element.Code_Fournisseur === this.BON.Code_fournisseur) {
+          fourn = element;
+        }
+      });
+      return fourn;
+    },
+    compte() {
+      var fourn = {};
+      this.comptes.forEach((element) => {
+        if (element.Num_Compte === this.BON.Num_compte) {
+          fourn = element;
+        }
+      });
+      return fourn;
+    },
+    service() {
+      var fourn = {};
+      this.services.forEach((element) => {
+        if (element.Code_service === this.BON.Code_service) {
+          fourn = element;
+        }
+      });
+      return fourn;
+    },
+  },
+  mounted() {
+    this.idCommande = this.$route.params.id;
+    bonServices.getBon(this.idCommande).then((response) => {
+      this.BON = response.data;
+    });
+    fournisseurServices.getAllFournisseurs().then((response) => {
+      console.log(typeof response.data);
+      this.fournisseurs = response.data;
+    });
+    compteServices.getAllComptes().then((response) => {
+      this.comptes = response.data;
+    });
+    serviceServices.getAllServices().then((response) => {
+      this.services = response.data;
+    });
   },
 };
 </script>

@@ -11,6 +11,9 @@ export default {
   components: {
     Header,
   },
+  mounted() {
+   // this.$store.dispatch('getAllBons'
+  },
 
 };
 </script>
