@@ -180,24 +180,20 @@
           </div>
           <div class="compte row d-flex justify-content-between">
             <label for="compte" class="compte_label col-2">Compte:</label>
-            <input
-              type="text"
-              class="compte_input1 col-3"
-              :value="BON.Num_compte"
-            />
-            <input readonly type="text" class="compte_input2 col-5" value="" />
+            <select v-model="BON.Num_compte"  name="fournisseur" id="">
+              <option v-for="(fourn, index) in comptes" :key="index" :value="fourn.Num_Compte">{{fourn.Num_Compte}}</option>
+            </select>
+            <input readonly type="text" class="compte_input2 col-5" :value="compte.Libellé" />
           </div>
           <div class="service row d-flex justify-content-between">
             <label for="service" class="service col-2">Service:</label>
-            <input
-              type="text"
-              class="service_input1 col-3"
-              :value="BON.Code_service"
-            />
+            <select v-model="BON.Code_service"  name="fournisseur" id="">
+              <option v-for="(fourn, index) in services" :key="index" :value="fourn.Code_service">{{fourn.Code_service}}</option>
+            </select>
             <input
               type="text"
               class="service_input2 col-5"
-              value="nom"
+              :value="service.Nom_service"
               readonly
             />
           </div>
@@ -273,13 +269,12 @@ export default {
     addNewArticle() {},
     removeArticle(index) {
       this.newArticle.splice(index, 1);
-      console.log("test");
     },
   },
   computed: {
     fournisseur() {
       var fourn = {};
-      this.fournisseurs.forEach((element) => {
+        this.fournisseurs.forEach((element) => {
         if (element.Code_Fournisseur === this.BON.Code_fournisseur) {
           fourn = element;
         }
@@ -310,15 +305,14 @@ export default {
     bonServices.getBon(this.idCommande).then((response) => {
       this.BON = response.data;
     });
-    fournisseurServices.getAllFournisseurs().then((response) => {
-      console.log(typeof response.data);
-      this.fournisseurs = response.data;
-    });
     compteServices.getAllComptes().then((response) => {
       this.comptes = response.data;
     });
     serviceServices.getAllServices().then((response) => {
       this.services = response.data;
+    });
+    fournisseurServices.getAllFournisseurs().then((response) => {
+      this.fournisseurs = response.data;
     });
   },
 };
