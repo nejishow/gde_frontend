@@ -31,8 +31,6 @@ export const actions = {
   },
   getAllBons({commit}) {
     return bonServices.getAllBons().then((response) => {
-      console.log(response)
-
       commit('SET_BONS', response.data)
     })
   },

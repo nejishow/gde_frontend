@@ -30,6 +30,7 @@
           >Total de bons de commandes en Francs DJ: XX</span
         >
       </div>
+      {{filteredMandats}}
       <table class="table table-striped">
         <thead>
           <tr>
@@ -46,7 +47,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr >
             <th scope="row">2222</th>
             <td>ABCD</td>
             <td>1234</td>
@@ -64,6 +65,27 @@
   </div>
 </template>
 
+
+<script>
+import mandatService from '../services/mandats';
+export default {
+  data() {
+    return {
+      filteredMandats:[]
+    }
+  },
+  computed: {
+    mandats() {
+      return this.$store.state.mandat.mandats
+    }
+  },
+  mounted() {
+    mandatService.getAllMandats().then((response)=>{
+      this.filteredMandats = response.data
+    })
+  },
+}
+</script>
 <style lang="scss" scoped>
 .menu {
   width: 100%;

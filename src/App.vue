@@ -12,7 +12,8 @@ export default {
     Header,
   },
   mounted() {
-   // this.$store.dispatch('getAllBons'
+    this.$store.dispatch('getAllMandats')
+    this.$store.dispatch('getAllBons')
   },
 
 };
